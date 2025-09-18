@@ -18,4 +18,16 @@ def index():
 def base():
     return render_template('base.html')
 
+@app.route('/mision')
+def mision():
+    return render_template('mision.html')
+
+@app.route("/vision")
+def vision():
+    return render_template('vision.html')
+
+@app.route("/programas")
+def programas():
+    return render_template('programas.html')
+
 app.run(host='0.0.0.0', port=5000, debug=True)

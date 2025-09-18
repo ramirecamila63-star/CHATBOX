@@ -8,20 +8,25 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default">
+    <h1>Universitaria de Colombia</h1>
+    
+    <nav class="navbar navbar-expand-sm bg-light">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="mision.html">Mision</a></li>
-      <li><a href="vision.html">Vision</a></li>
-      <li><a href="programas.html">Programas</a></li>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('mision')}}">Mision</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('vision')}}">Vision</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{url_for('programas')}}">Programas</a>
+      </li>
     </ul>
   </div>
 </nav>
+     
     {% block content %} {% endblock %}
 </body>
-<footer><a href="www.google.com"></a>Visitenos en Internet</footer>
+<footer><a href="www.google.com">Visitenos en Internet</a></footer>
 </html>
