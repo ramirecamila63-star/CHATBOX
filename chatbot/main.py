@@ -14,4 +14,8 @@ def home():
 def index():
     return render_template('index.html')
 
+@app.route("/base")
+def base():
+    return render_template('base.html')
+
 app.run(host='0.0.0.0', port=5000, debug=True)
