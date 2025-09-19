@@ -52,11 +52,11 @@ def programas():
         codigo = request.form.get('codigo')
         descripcion = request.form.get('descripcion')
         
-        print("="*50)
+        #print("="*50)
         print("DATOS RECIBIDOS EN PROGRAMAS:")
         print(f"Código del programa: {codigo}")
         print(f"Descripción del programa: {descripcion}")
-        print("="*50)
+        #print("="*50)
         
         return render_template('vision.html', 
                               codigo=codigo, 
