@@ -53,7 +53,7 @@ def programas():
         descripcion = request.form.get('descripcion')
         
         print("="*50)
-        print("DATOS RECIBIDOS EN PROGRAMAS (POST):")
+        print("DATOS RECIBIDOS EN PROGRAMAS:")
         print(f"Código del programa: {codigo}")
         print(f"Descripción del programa: {descripcion}")
         print("="*50)
