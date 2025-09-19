@@ -4,22 +4,168 @@
 
 {% block content %}
 <div class="container mt-4">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <div class="text-center mb-4">
-                <i class="fas fa-eye fa-3x text-primary mb-3"></i>
-                <h2 class="fw-bold">Nuestra Visión</h2>
-                <div class="border-bottom w-25 mx-auto mb-4"></div>
-            </div>
-            <div class="card p-4">
-                <p class="lead">Ser reconocidos como una de las mejores universidades del país, líder en innovación educativa y con una fuerte proyección internacional, contribuyendo a la construcción de un futuro más justo y equitativo.</p>
-                <div class="mt-4 text-center">
-                    <a href="{{url_for('base')}}" class="btn btn-primary">
-                        <i class="fas fa-home me-2"></i> Volver al inicio
-                    </a>
+    <!-- Banner principal -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="vision-banner text-center py-5 rounded-4 position-relative overflow-hidden">
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-primary opacity-75"></div>
+                <div class="position-relative z-10">
+                    <i class="fas fa-eye fa-4x text-white mb-4"></i>
+                    <h1 class="fw-bold text-white display-5">Nuestra Visión</h1>
+                    <p class="text-white-50 lead">Líderes en innovación educativa</p>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Si viene del formulario, mostramos los datos del programa -->
+    {% if from_form and codigo and descripcion %}
+    <div class="row mb-5">
+        <div class="col-lg-10 mx-auto">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle fa-2x me-3"></i>
+                    <div>
+                        <h4 class="alert-heading">¡Programa Registrado Exitosamente!</h4>
+                        <p class="mb-0"><strong>Código:</strong> {{ codigo }}</p>
+                        <p class="mb-0"><strong>Descripción:</strong> {{ descripcion }}</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Contenido principal -->
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-lg overflow-hidden">
+                <div class="card-body p-0">
+                    <!-- Sección 1 -->
+                    <div class="p-4 p-md-5 border-bottom border-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center mb-4 mb-md-0">
+                                <div class="vision-icon bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-globe fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <h3 class="fw-bold text-primary">Proyección Internacional</h3>
+                                <p class="lead mb-0">Ser reconocidos como una de las mejores universidades del país, líder en innovación educativa y con una fuerte proyección internacional.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 2 -->
+                    <div class="p-4 p-md-5 border-bottom border-light bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-10 order-md-2 mb-4 mb-md-0">
+                                <h3 class="fw-bold text-primary">Innovación Educativa</h3>
+                                <p class="lead mb-0">Líderes en innovación educativa, implementando metodologías de vanguardia para la formación integral de nuestros estudiantes.</p>
+                            </div>
+                            <div class="col-md-2 text-center order-md-1">
+                                <div class="vision-icon bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-lightbulb fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 3 -->
+                    <div class="p-4 p-md-5 border-bottom border-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center mb-4 mb-md-0">
+                                <div class="vision-icon bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-balance-scale fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <h3 class="fw-bold text-primary">Justicia y Equidad</h3>
+                                <p class="lead mb-0">Contribuyendo a la construcción de un futuro más justo y equitativo, formando profesionales con conciencia social.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección 4 -->
+                    <div class="p-4 p-md-5 bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-10 order-md-2 mb-4 mb-md-0">
+                                <h3 class="fw-bold text-primary">Excelencia Académica</h3>
+                                <p class="lead mb-0">Comprometidos con la excelencia académica y la investigación, formando líderes capaces de transformar la sociedad.</p>
+                            </div>
+                            <div class="col-md-2 text-center order-md-1">
+                                <div class="vision-icon bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 80px; height: 80px;">
+                                    <i class="fas fa-award fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cita destacada -->
+            <div class="mt-5 text-center">
+                <blockquote class="blockquote fs-4">
+                    <p class="mb-0 fst-italic">"Innovación educativa para un futuro más justo y equitativo"</p>
+                </blockquote>
+            </div>
+            
+            <!-- Botón de navegación -->
+            <div class="text-center mt-5">
+                <a href="{{url_for('base')}}" class="btn btn-primary btn-lg px-4 py-3 rounded-pill shadow">
+                    <i class="fas fa-home me-2"></i> Volver al inicio
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Estilos adicionales para esta página -->
+<style>
+    .vision-banner {
+        background: linear-gradient(135deg, #00132c 0%, #003366 100%);
+    }
+    
+    .vision-icon {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .vision-icon:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 19, 44, 0.15);
+    }
+    
+    .card {
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .border-light {
+        border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+    
+    .alert {
+        border: none;
+        border-radius: 12px;
+    }
+    
+    @media (max-width: 768px) {
+        .display-5 {
+            font-size: 2rem;
+        }
+        
+        .vision-icon {
+            width: 60px !important;
+            height: 60px !important;
+        }
+        
+        .vision-icon i {
+            font-size: 1.5rem;
+        }
+    }
+</style>
 {% endblock %}
