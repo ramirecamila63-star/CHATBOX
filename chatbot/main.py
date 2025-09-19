@@ -2,6 +2,10 @@
 #python -m venv entorno1
 #cd entorno1 
 #.\Scripts\Activate
+
+#cd chatbot
+#source ./entorno1/bin/activate
+#python main.py
 from flask import Flask, render_template
 
 app = Flask(__name__)
