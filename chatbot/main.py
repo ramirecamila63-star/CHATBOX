@@ -1,11 +1,15 @@
 #pip install virtualenv
 #python -m venv entorno1
+#cd chatbot
 #cd entorno1 
 #.\Scripts\Activate
 
 #cd chatbot
 #source ./entorno1/bin/activate
 #python main.py
+
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+# .\entorno1\bin\activate
 from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
