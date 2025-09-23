@@ -11,6 +11,15 @@
                 <h2 class="fw-bold">Nuestra Misión</h2>
                 <div class="border-bottom w-25 mx-auto mb-4"></div>
             </div>
+            
+            <!-- Mostrar mensaje de error si existe -->
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            
             <div class="card p-4">
                 <p class="lead">Somos una institución de educación superior comprometida con la formación integral de profesionales, impulsando el desarrollo social y económico a través de la excelencia académica y la investigación.</p>
                 <div class="mt-4 text-center">
