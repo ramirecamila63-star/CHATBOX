@@ -12,9 +12,8 @@ from flask import Flask, render_template, request, redirect, url_for, g
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta_aqui'  # Necesario para los mensajes flash
+app.secret_key = 'tu_clave_secreta_aqui'  
 
-# Configuración de la base de datos
 DATABASE = 'base.db'
 
 def get_db():
@@ -37,31 +36,27 @@ def base():
 @app.route('/mision', methods=['GET', 'POST'])
 def mision():
     if request.method == 'POST':
-        # Obtener datos del formulario
         codigo = request.form.get('codigo')
         descripcion = request.form.get('descripcion')
-        
-        # Guardar en la base de datos
+       
         db = get_db()
         cursor = db.cursor()
         try:
             cursor.execute("INSERT INTO carrera (descripcion) VALUES (?)", (descripcion,))
             db.commit()
-            # Obtener el ID del último registro insertado
+
             last_id = cursor.lastrowid
             print(f"Programa guardado: ID {last_id}, Descripción: {descripcion}")
             
-            # Redirigir a la página de respuesta con los datos
             return redirect(url_for('respuesta', id=last_id, descripcion=descripcion))
         except sqlite3.IntegrityError as e:
             print(f"Error: {e}")
-            # Manejar error de duplicado
+          
             return render_template('mision.html', error="La descripción del programa ya existe")
         except Exception as e:
             print(f"Error inesperado: {e}")
             return render_template('mision.html', error="Error al guardar el programa")
     else:
-        # GET: mostrar la página de misión
         return render_template('mision.html')
 
 @app.route("/vision", methods=['GET', 'POST'])
@@ -84,12 +79,12 @@ def vision():
 
 @app.route("/programas", methods=['GET'])
 def programas():
-    # Mostrar solo el formulario
+    
     return render_template('programas.html')
 
 @app.route("/lista_carreras")
 def lista_carreras():
-    # Mostrar programas existentes
+    
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM carrera")
@@ -98,13 +93,12 @@ def lista_carreras():
 
 @app.route("/respuesta")
 def respuesta():
-    # Obtener parámetros de la URL
+   
     id_carrera = request.args.get('id')
     descripcion = request.args.get('descripcion')
     
     return render_template('respuesta.html', id=id_carrera, descripcion=descripcion)
 
-# Rutas para editar y eliminar
 @app.route("/editar_carrera/<int:id>", methods=['GET', 'POST'])
 def editar_carrera(id):
     db = get_db()
