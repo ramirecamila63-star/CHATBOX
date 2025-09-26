@@ -4,6 +4,19 @@
 
 {% block content %}
 <div class="container mt-4">
+    <div class="card shadow-sm mb-4 sticky-top" style="top: 20px; z-index: 100;">
+        <div class="card-body py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{url_for('base')}}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i> Volver al inicio
+                </a>
+                <a href="{{url_for('programas')}}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i> Agregar Nueva Carrera
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="text-center mb-4">
         <i class="fas fa-list fa-3x text-primary mb-3"></i>
         <h2 class="fw-bold">Carreras Existentes</h2>
@@ -11,7 +24,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-10 mx-auto">
+        <div class="col-lg-12 mx-auto">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h4 class="mb-0">Lista de Carreras</h4>
@@ -32,10 +45,10 @@
                                     <td>{{ programa.id }}</td>
                                     <td>{{ programa.descripcion }}</td>
                                     <td>
-                                        <a href="{{ url_for('editar_carrera', id=programa.id) }}" class="btn btn-sm btn-outline-primary">
+                                        <a href="{{ url_for('editar_carrera', id=programa.id) }}" class="btn btn-sm btn-primary">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
-                                        <a href="{{ url_for('eliminar_carrera', id=programa.id) }}" class="btn btn-sm btn-outline-danger ms-1" onclick="return confirm('¿Está seguro de eliminar esta carrera?')">
+                                        <a href="{{ url_for('eliminar_carrera', id=programa.id) }}" class="btn btn-sm btn-danger ms-2" onclick="return confirm('¿Está seguro de eliminar esta carrera?')">
                                             <i class="fas fa-trash"></i> Eliminar
                                         </a>
                                     </td>
@@ -45,15 +58,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-
-            <div class="text-center mt-4">
-                <a href="{{url_for('base')}}" class="btn btn-outline-primary">
-                    <i class="fas fa-arrow-left me-2"></i> Volver al inicio
-                </a>
-                <a href="{{url_for('programas')}}" class="btn btn-primary ms-2">
-                    <i class="fas fa-plus me-2"></i> Agregar Nueva Carrera
-                </a>
             </div>
         </div>
     </div>
