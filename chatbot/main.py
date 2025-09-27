@@ -131,5 +131,12 @@ def eliminar_carrera(id):
         print(f"Error al eliminar: {e}")
     return redirect(url_for('lista_carreras'))
 
+@app.route("/predict", methods=['GET', 'POST'])
+def predict():
+    if request.method == "POST":
+        return render_template('chat.html')
+    else:
+        return render_template('chat.html')
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Chat Box{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <h1 class="text_center">Chat Box - Gamini IA - Bienvenido</h1>
+        <p class="text_center">En que puede ayudarte hoy?</p>
+        <br>
+
+        <form action="/predic" method="POST" class="mb-4">
+            <div class="mb-3">
+                <label for ="prompt" class="form-label">Escribe tu pregunta:</label>
+                <textarea class="form-control" id="prompt" name="prompt" rows="4" placeholder="Escribe tu pregunta aqui..." required></textarea>
+            </div>
+            <br>
+            <button type="submit" class="btn btn_primary">Enviar</button>
+        </form>
+
+    </div>
+
+{%endblock%}
