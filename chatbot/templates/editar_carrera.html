@@ -21,7 +21,12 @@
                     <h4>Modificar Carrera</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ url_for('editar_carrera', id=programa.id) }}">
+                    <form method="POST" action="{{ url_for('editar_carrera', codigo=programa.codigo) }}">
+                        <div class="mb-3">
+                            <label for="codigo" class="form-label">Código</label>
+                            <input type="text" class="form-control" id="codigo" name="codigo" value="{{ programa.codigo }}" readonly>
+                            <div class="form-text">El código no se puede modificar.</div>
+                        </div>
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción de la Carrera</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{ programa.descripcion }}</textarea>

@@ -42,17 +42,15 @@ def mision():
         db = get_db()
         cursor = db.cursor()
         try:
-            cursor.execute("INSERT INTO carrera (descripcion) VALUES (?)", (descripcion,))
+            # Insertar usando codigo y descripcion
+            cursor.execute("INSERT INTO carrera (codigo, descripcion) VALUES (?, ?)", (codigo, descripcion))
             db.commit()
-
-            last_id = cursor.lastrowid
-            print(f"Programa guardado: ID {last_id}, Descripción: {descripcion}")
+            print(f"Programa guardado: Código {codigo}, Descripción: {descripcion}")
             
-            return redirect(url_for('respuesta', id=last_id, descripcion=descripcion))
+            return redirect(url_for('respuesta', codigo=codigo, descripcion=descripcion))
         except sqlite3.IntegrityError as e:
             print(f"Error: {e}")
-          
-            return render_template('mision.html', error="La descripción del programa ya existe")
+            return render_template('mision.html', error="El código o la descripción ya existen")
         except Exception as e:
             print(f"Error inesperado: {e}")
             return render_template('mision.html', error="Error al guardar el programa")
@@ -79,12 +77,10 @@ def vision():
 
 @app.route("/programas", methods=['GET'])
 def programas():
-    
     return render_template('programas.html')
 
 @app.route("/lista_carreras")
 def lista_carreras():
-    
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM carrera")
@@ -93,40 +89,39 @@ def lista_carreras():
 
 @app.route("/respuesta")
 def respuesta():
-   
-    id_carrera = request.args.get('id')
+    codigo = request.args.get('codigo')
     descripcion = request.args.get('descripcion')
     
-    return render_template('respuesta.html', id=id_carrera, descripcion=descripcion)
+    return render_template('respuesta.html', codigo=codigo, descripcion=descripcion)
 
-@app.route("/editar_carrera/<int:id>", methods=['GET', 'POST'])
-def editar_carrera(id):
+@app.route("/editar_carrera/<string:codigo>", methods=['GET', 'POST'])  # Cambiado a string y codigo
+def editar_carrera(codigo):
     db = get_db()
     cursor = db.cursor()
     
     if request.method == 'POST':
-        descripcion = request.form.get('descripcion')
+        nueva_descripcion = request.form.get('descripcion')
         try:
-            cursor.execute("UPDATE carrera SET descripcion = ? WHERE id = ?", (descripcion, id))
+            cursor.execute("UPDATE carrera SET descripcion = ? WHERE codigo = ?", (nueva_descripcion, codigo))
             db.commit()
-            print(f"Programa actualizado: ID {id}, Nueva descripción: {descripcion}")
+            print(f"Programa actualizado: Código {codigo}, Nueva descripción: {nueva_descripcion}")
             return redirect(url_for('lista_carreras'))
         except Exception as e:
             print(f"Error al actualizar: {e}")
-            return render_template('editar_carrera.html', id=id, error="Error al actualizar el programa")
+            return render_template('editar_carrera.html', codigo=codigo, error="Error al actualizar el programa")
     else:
-        cursor.execute("SELECT * FROM carrera WHERE id = ?", (id,))
+        cursor.execute("SELECT * FROM carrera WHERE codigo = ?", (codigo,))
         programa = cursor.fetchone()
         return render_template('editar_carrera.html', programa=programa)
 
-@app.route("/eliminar_carrera/<int:id>")
-def eliminar_carrera(id):
+@app.route("/eliminar_carrera/<string:codigo>")  # Cambiado a string y codigo
+def eliminar_carrera(codigo):
     db = get_db()
     cursor = db.cursor()
     try:
-        cursor.execute("DELETE FROM carrera WHERE id = ?", (id,))
+        cursor.execute("DELETE FROM carrera WHERE codigo = ?", (codigo,))
         db.commit()
-        print(f"Programa eliminado: ID {id}")
+        print(f"Programa eliminado: Código {codigo}")
     except Exception as e:
         print(f"Error al eliminar: {e}")
     return redirect(url_for('lista_carreras'))

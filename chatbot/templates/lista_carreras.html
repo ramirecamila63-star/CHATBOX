@@ -24,7 +24,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Código</th>
                                     <th>Descripción</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -32,11 +32,11 @@
                             <tbody>
                                 {% for programa in programas %}
                                 <tr>
-                                    <td>{{ programa.id }}</td>
+                                    <td><strong>{{ programa.codigo }}</strong></td>
                                     <td>{{ programa.descripcion }}</td>
                                     <td>
-                                        <a href="{{ url_for('editar_carrera', id=programa.id) }}" class="btn btn-sm btn-primary">Actualizar</a>
-                                        <a href="{{ url_for('eliminar_carrera', id=programa.id) }}" class="btn btn-sm btn-danger ms-2" onclick="return confirm('¿Está seguro de eliminar esta carrera?')">Eliminar</a>
+                                        <a href="{{ url_for('editar_carrera', codigo=programa.codigo) }}" class="btn btn-sm btn-primary">Actualizar</a>
+                                        <a href="{{ url_for('eliminar_carrera', codigo=programa.codigo) }}" class="btn btn-sm btn-danger ms-2" onclick="return confirm('¿Está seguro de eliminar esta carrera?')">Eliminar</a>
                                     </td>
                                 </tr>
                                 {% endfor %}

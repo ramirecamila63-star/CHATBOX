@@ -1,16 +1,19 @@
--- Tabla carrera (existente)
-CREATE TABLE IF NOT EXISTS carrera (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+-- Eliminar la tabla carrera si existe
+DROP TABLE IF EXISTS carrera;
+
+-- Crear la tabla carrera con la nueva estructura
+CREATE TABLE carrera (
+    codigo TEXT PRIMARY KEY,
     descripcion TEXT NOT NULL UNIQUE
 );
 
 -- Insertar datos en carrera
-INSERT OR IGNORE INTO carrera (descripcion) VALUES
-('Ingeniería en Sistemas de Información'),
-('Licenciatura en Sistemas de Información'),
-('Tecnicatura en Programación'),
-('Tecnicatura en Análisis de Sistemas'),
-('Tecnicatura en Redes y Telecomunicaciones');
+INSERT OR IGNORE INTO carrera (codigo, descripcion) VALUES
+('IS001', 'Ingeniería en Sistemas de Información'),
+('LS001', 'Licenciatura en Sistemas de Información'),
+('TP001', 'Tecnicatura en Programación'),
+('TA001', 'Tecnicatura en Análisis de Sistemas'),
+('TR001', 'Tecnicatura en Redes y Telecomunicaciones');
 
 -- Nueva tabla ciudad
 CREATE TABLE IF NOT EXISTS ciudad (
