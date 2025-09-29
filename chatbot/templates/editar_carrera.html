@@ -7,35 +7,28 @@
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="text-center mb-4">
-                <i class="fas fa-edit fa-3x text-primary mb-3"></i>
-                <h2 class="fw-bold">Editar Carrera</h2>
-                <div class="border-bottom w-25 mx-auto mb-4"></div>
+                <h2>Editar Carrera</h2>
             </div>
             
             {% if error %}
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger">
                 {{ error }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% endif %}
             
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Modificar Carrera</h4>
+            <div class="card">
+                <div class="card-header">
+                    <h4>Modificar Carrera</h4>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body">
                     <form method="POST" action="{{ url_for('editar_carrera', id=programa.id) }}">
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción de la Carrera</label>
                             <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required>{{ programa.descripcion }}</textarea>
                         </div>
                         <div class="d-grid gap-2 d-md-flex">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save me-2"></i> Guardar Cambios
-                            </button>
-                            <a href="{{url_for('lista_carreras')}}" class="btn btn-outline-secondary">
-                                <i class="fas fa-times me-2"></i> Cancelar
-                            </a>
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                            <a href="{{url_for('lista_carreras')}}" class="btn btn-outline-secondary">Cancelar</a>
                         </div>
                     </form>
                 </div>
