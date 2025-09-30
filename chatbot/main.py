@@ -8,8 +8,20 @@
 #source ./entorno1/bin/activate
 #python main.py
 
-from flask import Flask, render_template, request, redirect, url_for, g
+from flask import Flask, render_template, request, redirect, url_for, g, session
 import sqlite3
+from flask_session import Session
+# Al inicio de main.py, agrega estas importaciones
+import os
+import google.generativeai as genai
+import markdown
+
+# Reemplaza 'TU_API_KEY' con tu clave real o usa una variable de entorno
+genai.configure(api_key="AIzaSyDM1oeUQrrkE_lhcZwHtrfS_eRMjrnWy2U") 
+model = genai.GenerativeModel("gemini-2.5-pro")
+
+
+MAX_HISTORY = 4
 
 app = Flask(__name__)
 app.secret_key = 'tu_clave_secreta_aqui'  
@@ -126,12 +138,27 @@ def eliminar_carrera(codigo):
         print(f"Error al eliminar: {e}")
     return redirect(url_for('lista_carreras'))
 
+@app.route("/predic", methods=["POST"])
+def predic():
+    prompt = request.form.get("prompt")
+    if not prompt:
+        return render_template("chat.html", error="Por favor, ingresa una pregunta")
+    
+    try:
+        # Generar respuesta con Gemini
+        response = model.generate_content(prompt)
+        # Convertir la respuesta de Markdown a HTML
+        response_html = markdown.markdown(response.text)
+        return render_template("chat.html", prompt=prompt, response=response_html)
+    except Exception as e:
+        return render_template("chat.html", error=f"Error al generar respuesta: {str(e)}")
+
 @app.route("/predict", methods=['GET', 'POST'])
 def predict():
-    if request.method == "POST":
+    if request.method == "GET":
         return render_template('chat.html')
     else:
-        return render_template('chat.html')
+        return redirect(url_for('predic'))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
