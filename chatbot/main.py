@@ -11,12 +11,11 @@
 from flask import Flask, render_template, request, redirect, url_for, g, session
 import sqlite3
 from flask_session import Session
-# Al inicio de main.py, agrega estas importaciones
+
 import os
 import google.generativeai as genai
 import markdown
 
-# Reemplaza 'TU_API_KEY' con tu clave real o usa una variable de entorno
 genai.configure(api_key="AIzaSyDM1oeUQrrkE_lhcZwHtrfS_eRMjrnWy2U") 
 model = genai.GenerativeModel("gemini-2.5-pro")
 
@@ -54,7 +53,7 @@ def mision():
         db = get_db()
         cursor = db.cursor()
         try:
-            # Insertar usando codigo y descripcion
+            
             cursor.execute("INSERT INTO carrera (codigo, descripcion) VALUES (?, ?)", (codigo, descripcion))
             db.commit()
             print(f"Programa guardado: Código {codigo}, Descripción: {descripcion}")
