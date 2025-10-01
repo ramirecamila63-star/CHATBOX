@@ -24,7 +24,7 @@ model = genai.GenerativeModel("gemini-2.5-pro")
 MAX_HISTORY = 4
 
 app = Flask(__name__)
-app.secret_key = 'tu_clave_secreta_aqui'  
+app.secret_key = 'clave_secreta'  
 
 DATABASE = 'base.db'
 
