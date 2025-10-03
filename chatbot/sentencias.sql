@@ -38,3 +38,26 @@ INSERT OR IGNORE INTO ciudad (nombre, pais, poblacion, fecha_fundacion, codigo_p
 ('Ciudad de México', 'México', 9209944, '1521-08-13', '06000'),
 ('Santiago', 'Chile', 5672000, '1541-02-12', '8320000'),
 ('Caracas', 'Venezuela', 2832000, '1567-07-25', '1010');
+
+-- Tabla de usuarios
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    documento TEXT UNIQUE NOT NULL
+);
+
+-- Tabla de citas
+CREATE TABLE IF NOT EXISTS citas (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario_id INTEGER NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    marca_moto TEXT,
+    estado TEXT DEFAULT 'agendada', -- Puede ser 'agendada', 'cancelada', 'pospuesta'
+    FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
+);
+
+-- Insertar algunos usuarios de ejemplo
+INSERT OR IGNORE INTO usuarios (nombre, documento) VALUES 
+('Juan Pérez', '123456789'),
+('María García', '987654321');

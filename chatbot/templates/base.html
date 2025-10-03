@@ -51,6 +51,206 @@
 {% block content %} {% endblock %}
 </main>
 
+<!-- Chatbot emergente para agendar citas de motos -->
+<div class="chat-button" id="chat-button">
+    <i class="fas fa-motorcycle fa-2x"></i>
+</div>
+
+<div class="chat-container" id="chat-container">
+    <div class="chat-header">
+        <span>Asistente de Citas</span>
+        <span id="close-chat" style="cursor: pointer;"><i class="fas fa-times"></i></span>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="message-container">
+            <div class="message bot-message">
+                ¡Hola! Soy el asistente para agendar citas de mantenimiento de motos. ¿En qué puedo ayudarte?  
+            </div>
+        </div>
+    </div>
+    <div class="chat-input">
+        <form id="chat-form">
+            <div class="input-group">
+                <input type="text" class="form-control" id="mensaje" placeholder="Escribe tu mensaje...">
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .chat-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: #00132c;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 999;
+    }
+    
+    .chat-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        display: none;
+        flex-direction: column;
+        z-index: 1000;
+    }
+    
+    .chat-header {
+        background: #00132c;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        max-height: 380px;
+    }
+    
+    .chat-input {
+        padding: 10px;
+        border-top: 1px solid #eee;
+    }
+    
+    .message {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border-radius: 15px;
+        max-width: 80%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .user-message {
+        background: #e9e9eb;
+        align-self: flex-end;
+        margin-left: auto;
+    }
+    
+    .bot-message {
+        background: #00132c;
+        color: white;
+        align-self: flex-start;
+    }
+    
+    .message-container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat-messages::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .chat-messages::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    
+    .chat-messages::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+    
+    .chat-messages::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Mostrar/ocultar chat
+        $("#chat-button").click(function() {
+            $("#chat-container").toggle();
+            $("#chat-button").toggle();
+            
+            // Si el chat se abre, verificar si hay una sesión activa
+            if ($("#chat-container").is(":visible")) {
+                $.ajax({
+                    url: "/verificar_sesion_chat",
+                    type: "GET",
+                    success: function(response) {
+                        if (response.sesion_activa) {
+                            addMessage("Has vuelto. ¿Qué deseas hacer?\n1. Agendar cita\n2. Ver citas agendadas\n3. Salir", "bot");
+                        } else {
+                            // El mensaje inicial ya está en el HTML, no es necesario agregarlo
+                        }
+                    },
+                    error: function() {
+                        // El mensaje inicial ya está en el HTML, no es necesario agregarlo
+                    }
+                });
+            }
+        });
+
+        $("#close-chat").click(function() {
+            $("#chat-container").hide();
+            $("#chat-button").show();
+        });
+
+        // Enviar mensaje
+        $("#chat-form").submit(function(e) {
+            e.preventDefault();
+            var mensaje = $("#mensaje").val().trim();
+            if (mensaje) {
+                // Agregar mensaje del usuario al chat
+                addMessage(mensaje, "user");
+                $("#mensaje").val("");
+                
+                // Enviar mensaje al servidor
+                $.ajax({
+                    url: "/procesar_chat_moto",
+                    type: "POST",
+                    data: {
+                        mensaje: mensaje
+                    },
+                    success: function(response) {
+                        // Agregar respuesta del bot al chat
+                        addMessage(response.respuesta, "bot");
+                    },
+                    error: function() {
+                        addMessage("Lo siento, ocurrió un error. Por favor, intenta de nuevo más tarde.", "bot");
+                    }
+                });
+            }
+        });
+
+        function addMessage(text, sender) {
+            var messageClass = sender === "user" ? "user-message" : "bot-message";
+            var messageHtml = `
+                <div class="message-container">
+                    <div class="message ${messageClass}">${text.replace(/\n/g, '<br>')}</div>
+                </div>
+            `;
+            $("#chat-messages").append(messageHtml);
+            
+            // Auto-scroll al final del historial
+            $("#chat-messages").animate({ scrollTop: $("#chat-messages")[0].scrollHeight }, "fast");
+        }
+    });
+</script>
+
 <footer class="mt-auto py-4 text-white-50 text-center">
 <div class="container">
 <div class="row">
